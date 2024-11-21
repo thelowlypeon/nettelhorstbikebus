@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'Aristotelica';
+  src: url('/assets/fonts/Aristotelica-DemiBold.ttf') format('truetype');
+  font-weight: 600; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aristotelica';
+  src: url('/assets/fonts/Aristotelica-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aristotelica';
+  src: url('/assets/fonts/Aristotelica-ExtraLight.ttf') format('truetype');
+  font-weight: 100; /* Thin */
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, article header {
+  font-family: 'Aristotelica', sans-serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+}

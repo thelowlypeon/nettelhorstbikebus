@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>{{ site.title }} {% if page.title %} | {{ page.title }} {% endif %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.red.min.css"
+    >
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+  </head>
+
+  <body>
+    <main class="container">
+      <header>
+      {% include top-nav.html %}
+      </header>
+      <div class="main-container">
+        {% include left-panel.html %}
+        <div class="content-container">
+          {{ content }}
+        </div>
+      </div>
+    </main>
+    <footer>
+      <aside>
+      {% include social.html %}
+      </aside>
+      <small>Nettelhorst Bike Bus is organized by a bunch of parents who want their kids to enjoy safely getting to school. We are not affiliated with the school.</small>
+    </footer>
+  </body>
+</html>
