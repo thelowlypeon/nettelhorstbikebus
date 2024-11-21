@@ -18,4 +18,4 @@ jekyll serve
 
 ## Deployment
 
-This is currently deployed using Cloudflare Pages. If you have questions, ask <a href="https://github.com/users/thelowlypeon">@thelowlypeon</a>.
+This is currently deployed using Cloudflare Pages. If you have questions, ask <a href="https://github.com/thelowlypeon">@thelowlypeon</a>.
