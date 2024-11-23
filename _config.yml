@@ -1,6 +1,8 @@
 url: "https://nettelhorstbikebus.org"
 baseurl: ""
 title: "Nettelhorst Bike Bus"
+# calendar requires host so cloudflare can redirect in development
+calendar_url: "https://nettelhorstbikebus.org/calendar.ics"
 include:
   - favicon.ico
   - apple-touch-icon.png

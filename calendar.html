@@ -1,0 +1,140 @@
+---
+layout: default
+title: Calendar
+id: calendar
+---
+
+<article>
+  <details open>
+    <summary>Upcoming Rides <span aria-busy="true" id="events-count"></a></summary>
+    <p>Feel free to ride even if we don't! However, be aware there may be fewer adults to marshall and keep the kids safe.</p>
+    
+    <table id="events-container" data-calendar_url="{{ site.calendar_url }}" class="striped">
+      <tbody id="event-list"></tbody>
+    </table>
+  </details>
+
+  <hr />
+
+  <details>
+    <summary>
+        Subscribe to Our Calendar...</strong>
+    </summary>
+    <p>Stay updated by subscribing to our calendar feed. Follow the instructions below to add it to your favorite calendar app:</p>
+
+    <h3>🍎 Apple Calendar (Mac or iOS)</h3>
+    <ol>
+      <li>Copy the calendar feed URL: <code>{{ site.calendar_url }}</code>.</li>
+      <li><strong>On Mac:</strong>
+        <ol>
+          <li>Open the <strong>Calendar</strong> app.</li>
+          <li>In the menu bar, go to <strong>File > New Calendar Subscription...</strong></li>
+          <li>Paste the URL and click <strong>Subscribe</strong>.</li>
+        </ol>
+      </li>
+      <li><strong>On iOS:</strong>
+        <ol>
+          <li>Go to <strong>Settings > Calendar > Accounts > Add Account</strong>.</li>
+          <li>Select <strong>Other > Add Subscribed Calendar</strong>.</li>
+          <li>Enter the calendar feed URL and tap <strong>Next</strong>.</li>
+          <li>Adjust settings if needed and tap <strong>Save</strong>.</li>
+        </ol>
+      </li>
+    </ol>
+
+    <h3>📅 Google Calendar</h3>
+    <ol>
+      <li>Open <a href="https://calendar.google.com/" target="_blank" rel="noopener">Google Calendar</a> on your computer.</li>
+      <li>On the left-hand side, click the <strong>+</strong> icon next to "Other calendars."</li>
+      <li>Select <strong>From URL</strong>.</li>
+      <li>Enter the URL of the calendar feed: <code>{{ site.calendar_url }}</code></li>
+      <li>Click <strong>Add calendar</strong>.</li>
+      <li>The calendar will appear under "Other calendars."</li>
+    </ol>
+
+    <h3>🖥️ Other Calendar Apps</h3>
+    <p>Most calendar apps support ICS feeds. Look for an option to add a "Calendar URL" or "Subscribe to a calendar" and enter the URL: <code>{{ site.calendar_url }}</code>.</p>
+    <p>Or <a href="{{ site.calendar_url }}">download the ICS feed</a>.</p>
+  </details>
+</article>
+
+<script>
+  async function loadICALLibrary() {
+    // Dynamically import ICAL.js as an ES module
+    const module = await import('https://unpkg.com/ical.js/dist/ical.min.js');
+    return module.default || module; // Return ICAL module
+  }
+
+  async function fetchAndDisplayEvents(icsUrl) {
+    const eventList = document.getElementById('event-list');
+
+    try {
+      // Dynamically load the ICAL.js library
+      const ICAL = await loadICALLibrary();
+
+      // Fetch the ICS file from the URL
+      const response = await fetch(icsUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ICS: ${response.statusText}`);
+      }
+      const icsData = await response.text();
+
+      // Parse the ICS file
+      const jcalData = ICAL.parse(icsData);
+      const calendar = new ICAL.Component(jcalData);
+      const vevents = calendar.getAllSubcomponents('vevent');
+
+      // Get the current date and filter events within the next 7 days
+      const now = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(now.getDate() + 32);
+
+      const upcomingEvents = vevents
+        .map(event => {
+          const vEvent = new ICAL.Event(event);
+          return {
+            title: vEvent.summary,
+            start: vEvent.startDate.toJSDate(),
+          };
+        })
+        .filter(event => {
+          const eventStart = event.start.getTime();
+          return eventStart >= now.getTime() && eventStart <= nextWeek.getTime();
+        });
+
+      // Clear loading message and update count
+      const eventsCount = document.getElementById('events-count');
+      eventsCount.setAttribute('aria-busy', 'false');
+
+      // Display events
+      if (upcomingEvents.length === 0) {
+        eventList.innerHTML = '<tr><td colspan="2">No upcoming rides</td></tr>';
+      } else {
+        upcomingEvents.forEach(event => {
+          const tr = document.createElement('tr');
+          const th = document.createElement('td');
+          const td = document.createElement('td');
+          const formattedDate = new Intl.DateTimeFormat(undefined, { month: 'long', day: 'numeric' }).format(event.start);
+          const formattedTime = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: 'numeric' }).format(event.start);
+          th.innerHTML = `<strong>${formattedDate}</strong><br /><small>${formattedTime}</small>`;
+          td.textContent = event.title;
+          tr.appendChild(th);
+          tr.appendChild(td);
+          eventList.appendChild(tr);
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching or parsing ICS:', error);
+      eventList.innerHTML = '<tr><td colspan="2">Error loading events</td></tr>';
+    }
+  }
+
+  // NOTE: this needs to be the production host so cloudflare can handle the redirect
+  //const icsUrl = '{{ page.calendar_url }}';
+  const eventsContainer = document.getElementById('events-container');
+  const icsUrl = eventsContainer.getAttribute('data-calendar_url');
+  console.log("icsUrl: ", icsUrl);
+
+  // Start fetching events asynchronously
+  fetchAndDisplayEvents(icsUrl);
+</script>
