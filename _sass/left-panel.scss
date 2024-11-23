@@ -1,0 +1,21 @@
+.left-panel {
+  flex: 0 0 33%;
+  margin-right: 25px;
+  a.logo, hgroup, li { text-align: center; }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 60%;
+    max-width: 100%;
+  }
+
+  hgroup {
+    margin-top: 0.6rem;
+    text-transform: uppercase;
+    font-family: 'Aristotelica', sans-serif;
+    letter-spacing: 2px;
+    border-bottom: 1px solid gray;
+  }
+}

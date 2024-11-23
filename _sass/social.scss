@@ -1,0 +1,24 @@
+ul.social {
+  a {
+    display: inline-block;
+  }
+
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: inline;
+    img {
+      height: 25px;
+      width: 25px;
+    }
+  }
+}
+footer {
+  ul.social {
+    display: block;
+  }
+}

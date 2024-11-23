@@ -6,7 +6,7 @@
     <title>{{ site.title }} {% if page.title %} | {{ page.title }} {% endif %}</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.red.min.css"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.red.min.css"
     >
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
   </head>
@@ -24,7 +24,7 @@
       </div>
     </main>
     <footer>
-      <aside>
+      <aside class="hidden-md hidden-lg">
       {% include social.html %}
       </aside>
     </footer>

@@ -1,11 +1,31 @@
       <nav>
-        <ul>
-          <li><img class="site-logo" src="/assets/img/logo-bike.png" alt="Nettelhorst Bike Bus Logo" /></li>
-          <li class="site-name"><a href="/"><strong>Nettelhorst</strong> <small>Bike Bus</small></a></li>
+        <ul class="branding">
+          <li class="hidden-md hidden-lg">
+            <a title="Nettelhorst Bike Bus" href="/">
+              <img class="site-logo" src="/assets/img/logo-bike.png" alt="Nettelhorst Bike Bus Logo" />
+            </a>
+          </li>
+          <li><a href="/"><strong>Nettelhorst</strong> <small>Bike Bus</small></a></li>
         </ul>
         <ul>
-          <li><a href="/route">Route</a></li>
-          <li><a href="/rules">Rules</a></li>
-          <li><a href="/faq">FAQs</a></li>
+          <li class="hidden-sm">
+            <ul>
+              <li><a href="/route">Route</a></li>
+              <li><a href="/rules">Rules</a></li>
+              <li><a href="/faq">FAQs</a></li>
+            </ul>
+          </li>
+          <li class="hidden-md hidden-lg">
+            <details class="dropdown">
+              <summary>
+                ...
+              </summary>
+              <ul dir="rtl">
+                <li><a href="/route">Route</a></li>
+                <li><a href="/rules">Rules</a></li>
+                <li><a href="/faq">FAQs</a></li>
+              </ul>
+            </details>
+          </li>
         </ul>
       </nav>

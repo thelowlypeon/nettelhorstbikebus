@@ -24,3 +24,21 @@ h1, h2, h3, h4, h5, h6, article header {
   font-weight: 600;
   letter-spacing: 2px;
 }
+
+@media (max-width: 768px) {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hidden-md {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hidden-lg {
+    display: none !important;
+  }
+}

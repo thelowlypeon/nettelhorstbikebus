@@ -1,0 +1,36 @@
+header {
+  nav .hidden-sm {
+    font-family: 'Aristotelica', sans-serif;
+    letter-spacing: 2px;
+  }
+  nav {
+    // note: branding is too big for screens < 300px
+    .branding {
+      font-family: 'Aristotelica', sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: -20px;
+      font-size: 1.25rem;
+
+      .site-logo {
+        max-height: 2em;
+        width: auto;
+        vertical-align: baseline;
+      }
+
+      small {
+        font-size: 0.875rem;
+        color: var(--muted-color);
+      }
+    }
+
+    details.dropdown {
+      summary:not([role]) {
+        padding: calc(var(--pico-nav-link-spacing-vertical) - var(--pico-border-width) * 2) calc(var(--pico-nav-link-spacing-horizontal) * 2)
+      }
+      summary::after { // the pico chevron
+        display: none;
+      }
+    }
+  }
+}
