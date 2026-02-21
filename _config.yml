@@ -3,6 +3,9 @@ baseurl: ""
 title: "Nettelhorst Bike Bus"
 # calendar requires host so cloudflare can redirect in development
 calendar_url: "https://nettelhorstbikebus.org/calendar.ics"
+bluesky: https://bsky.app/profile/nettelhorstbikebus.org
+instagram: https://instagram.com/nettelhorstbike
+tracker: https://nettelhorst-bike-bus.glitch.me/
 include:
   - favicon.ico
   - apple-touch-icon.png
