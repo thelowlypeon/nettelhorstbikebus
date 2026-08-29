@@ -16,7 +16,7 @@ id: calendar
 
   <hr />
 
-  <details>
+  <details id="subscribe-info">
     <summary>
         Subscribe to Our Calendar...</strong>
     </summary>
@@ -140,11 +140,15 @@ id: calendar
       const eventsCount = document.getElementById('events-count');
       eventsCount.setAttribute('aria-busy', 'false');
 
-      // Display events
+      // Display events, capped so the table doesn't grow unbounded once
+      // recurring rides are expanded — point people at the subscribe
+      // instructions instead for anything further out.
+      const MAX_DISPLAYED_EVENTS = 5;
+
       if (upcomingEvents.length === 0) {
         eventList.innerHTML = '<tr><td colspan="2">No upcoming rides</td></tr>';
       } else {
-        upcomingEvents.forEach(event => {
+        upcomingEvents.slice(0, MAX_DISPLAYED_EVENTS).forEach(event => {
           const tr = document.createElement('tr');
           const th = document.createElement('td');
           const td = document.createElement('td');
@@ -156,6 +160,24 @@ id: calendar
           tr.appendChild(td);
           eventList.appendChild(tr);
         });
+
+        if (upcomingEvents.length > MAX_DISPLAYED_EVENTS) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 2;
+          const link = document.createElement('a');
+          link.href = '#subscribe-info';
+          link.textContent = 'Subscribe below to see more upcoming rides';
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            const subscribeInfo = document.getElementById('subscribe-info');
+            subscribeInfo.open = true;
+            subscribeInfo.scrollIntoView({ behavior: 'smooth' });
+          });
+          td.appendChild(link);
+          tr.appendChild(td);
+          eventList.appendChild(tr);
+        }
       }
     } catch (error) {
       console.error('Error fetching or parsing ICS:', error);
