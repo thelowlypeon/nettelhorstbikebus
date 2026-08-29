@@ -99,7 +99,8 @@ id: calendar
         .filter(event => {
           const eventStart = event.start.getTime();
           return eventStart >= now.getTime() && eventStart <= nextWeek.getTime();
-        });
+        })
+        .sort((a, b) => a.start.getTime() - b.start.getTime());
 
       // Clear loading message and update count
       const eventsCount = document.getElementById('events-count');
