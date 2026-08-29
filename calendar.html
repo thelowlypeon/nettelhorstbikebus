@@ -111,12 +111,18 @@ id: calendar
       nextWeek.setDate(now.getDate() + 32);
 
       const upcomingEvents = [];
+      let moreEventsBeyondWindow = false;
       masterEvents.forEach(vEvent => {
         if (vEvent.isRecurring()) {
           const iterator = vEvent.iterator();
           let next;
           while ((next = iterator.next())) {
-            if (next.toJSDate().getTime() > nextWeek.getTime()) break;
+            if (next.toJSDate().getTime() > nextWeek.getTime()) {
+              // The series has at least one more occurrence past the display
+              // window, even if the window itself has few (or no) events.
+              moreEventsBeyondWindow = true;
+              break;
+            }
 
             const occurrence = vEvent.getOccurrenceDetails(next);
             const status = occurrence.item.component.getFirstPropertyValue('status');
@@ -161,7 +167,7 @@ id: calendar
           eventList.appendChild(tr);
         });
 
-        if (upcomingEvents.length > MAX_DISPLAYED_EVENTS) {
+        if (upcomingEvents.length > MAX_DISPLAYED_EVENTS || moreEventsBeyondWindow) {
           const tr = document.createElement('tr');
           const td = document.createElement('td');
           td.colSpan = 2;
